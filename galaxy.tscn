@@ -1,0 +1,105 @@
+[gd_scene load_steps=10 format=3 uid="uid://daje8yhj75q3c"]
+
+[ext_resource type="Script" path="res://Galaxy.gd" id="1_8dtu2"]
+[ext_resource type="Script" path="res://FollowCamera.gd" id="2_l5fid"]
+[ext_resource type="Script" path="res://GravitySetter.gd" id="3_k8hg1"]
+[ext_resource type="Script" path="res://PlanetAdder.gd" id="4_o1woa"]
+
+[sub_resource type="Gradient" id="Gradient_6xuih"]
+interpolation_mode = 2
+colors = PackedColorArray(0.0429, 0.09658, 0.11, 1, 0.1056, 0.18064, 0.32, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jn4i2"]
+gradient = SubResource("Gradient_6xuih")
+fill_from = Vector2(0.679487, 0.376068)
+fill_to = Vector2(0.67094, 0.982906)
+repeat = 2
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_34ew8"]
+panorama = SubResource("GradientTexture2D_jn4i2")
+
+[sub_resource type="Sky" id="Sky_ys50m"]
+sky_material = SubResource("PanoramaSkyMaterial_34ew8")
+
+[sub_resource type="Environment" id="Environment_3wdbd"]
+background_mode = 2
+background_energy_multiplier = 1.15
+sky = SubResource("Sky_ys50m")
+ambient_light_source = 3
+ambient_light_color = Color(0, 0.0352941, 0.0901961, 1)
+ambient_light_energy = 3.49
+reflected_light_source = 2
+ssao_enabled = true
+fog_density = 0.005
+volumetric_fog_density = 0.0102
+volumetric_fog_albedo = Color(0.729412, 0.74902, 1, 1)
+
+[node name="Galaxy" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.267213, -1.21897, 1.35402)
+script = ExtResource("1_8dtu2")
+step_delay = 0.01
+num_of_planets = 20
+gravity_strength = 400.0
+dist_mult = 10.0
+mass_mult = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.173648, 0.984808, 0, 0.984808, 0.173648, -1, 7.5904e-09, -4.30473e-08, 200, 30, 0)
+fov = 105.7
+script = ExtResource("2_l5fid")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3wdbd")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 173.001, 177.441)
+light_energy = 7.956
+light_indirect_energy = 1.291
+distance_fade_enabled = true
+distance_fade_begin = 500.0
+distance_fade_length = 2000.0
+omni_range = 1897.59
+omni_attenuation = 0.450624
+omni_shadow_mode = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HScrollBar" type="HScrollBar" parent="CanvasLayer/Control"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 53.0
+offset_right = 225.0
+offset_bottom = 77.0
+min_value = -2000.0
+max_value = 2000.0
+step = 10.0
+value = 400.0
+script = ExtResource("3_k8hg1")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 86.0
+offset_top = 83.0
+offset_right = 142.0
+offset_bottom = 109.0
+text = "Gravity"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 13.0
+offset_top = 9.0
+offset_right = 151.52
+offset_bottom = 40.0
+text = "Add Planet"
+script = ExtResource("4_o1woa")
+
+[connection signal="gravity_setter" from="CanvasLayer/Control/HScrollBar" to="." method="_on_h_scroll_bar_gravity_setter"]
+[connection signal="new_planet_requested" from="CanvasLayer/Control/Button" to="." method="_on_button_new_planet_requested"]

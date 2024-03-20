@@ -1,0 +1,9 @@
+res://galaxy.tscn
+res://galaxy.gdshader
+res://Planet.gd
+res://planet.tscn
+res://Galaxy.gd
+res://FollowCamera.gd
+res://MeshRandomizer.gd
+res://GravitySetter.gd
+res://PlanetAdder.gd

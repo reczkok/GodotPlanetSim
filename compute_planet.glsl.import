@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://cq2oqlp37nrbc"
+path="res://.godot/imported/compute_planet.glsl-ef3d7de73ac0fb838c92d728becf274c.res"
+
+[deps]
+
+source_file="res://compute_planet.glsl"
+dest_files=["res://.godot/imported/compute_planet.glsl-ef3d7de73ac0fb838c92d728becf274c.res"]
+
+[params]
+

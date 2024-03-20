@@ -1,0 +1,25 @@
+[gd_scene load_steps=7 format=3 uid="uid://dremesvjgofv8"]
+
+[ext_resource type="Script" path="res://Planet.gd" id="1_vrk5i"]
+[ext_resource type="Texture2D" uid="uid://51b2vxxme4b1" path="res://maps_planets/planet.jpg" id="2_8jbf5"]
+[ext_resource type="Texture2D" uid="uid://drnpju2toh8bo" path="res://maps_planets/o0b9ce5g.bmp" id="3_mcs4f"]
+[ext_resource type="Script" path="res://MeshRandomizer.gd" id="4_qpuo2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uq4aq"]
+albedo_texture = ExtResource("2_8jbf5")
+roughness = 0.6
+emission = Color(0, 0.780392, 0.713726, 1)
+emission_energy_multiplier = 10.0
+anisotropy = 1.0
+heightmap_scale = 1.113
+heightmap_texture = ExtResource("3_mcs4f")
+
+[sub_resource type="SphereMesh" id="SphereMesh_0gg5v"]
+material = SubResource("StandardMaterial3D_uq4aq")
+
+[node name="Planet" type="Node3D"]
+script = ExtResource("1_vrk5i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_0gg5v")
+script = ExtResource("4_qpuo2")
